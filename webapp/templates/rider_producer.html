@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rider</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <pre id="info"></pre>
+    <div
+      id="map"
+      clas="container"
+      style="width: 1000px; height: 600px; margin-left: 200px; margin-top: 30px"
+    ></div>
+  </body>
+
+  <script>
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoiYXNpc2hyeWUiLCJhIjoiY2tta3NuaWQ0MTRhZjJvcW00ZnRueDM1NSJ9.l4EtRNdj63jy3t5cTw44Dg";
+    var map = new mapboxgl.Map({
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v11",
+    });
+
+    const URL = "/rider_push";
+    const xhr = new XMLHttpRequest();
+    map.on("click", function (e) {
+      var marker = new mapboxgl.Marker().setLngLat(e.lngLat).addTo(map);
+      sender = JSON.stringify(JSON.stringify("RIDER-" + e.lngLat));
+      xhr.open("POST", URL);
+      xhr.send(sender);
+    });
+  </script>
+</html>
